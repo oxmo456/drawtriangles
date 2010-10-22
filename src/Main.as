@@ -1,13 +1,17 @@
 package {
+	import flash.display.Bitmap;
 	import flash.display.Sprite;
 
 	public class Main extends Sprite {
+		[Embed(source="test_img.jpg", mimeType="image/jpeg")]
+		private var TestImg : Class;
+
 		public function Main() {
+			var testImg : Bitmap = new TestImg as Bitmap;
+			addChild(testImg);
 		}
 	}
 }
-
-
 class Plane {
 	public var vertices : Vector.<Number>;
 	public var indices : Vector.<int>;
