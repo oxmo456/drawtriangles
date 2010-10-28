@@ -1,5 +1,8 @@
 package {
+	import flash.geom.Point;
+	import flash.events.Event;
 	import flash.display.Bitmap;
+	import flash.display.BitmapData;
 	import flash.display.Sprite;
 
 	public class Main extends Sprite {
@@ -7,8 +10,50 @@ package {
 		private var TestImg : Class;
 
 		public function Main() {
-			var testImg : Bitmap = new TestImg as Bitmap;
-			addChild(testImg);
+			var d : uint = 0xf0e2ff;
+
+			trace(d.toString(2));
+
+			d = d & 0x1FF;
+
+			trace(d.toString(2));
+
+			// var testImg : BitmapData = (new TestImg as Bitmap).bitmapData;
+			//			//
+			// var plane : Plane = new Plane(stage.stageWidth, stage.stageHeight, 10, 10);
+			//
+			// graphics.lineStyle(0, 0, 0.5);
+			// graphics.beginBitmapFill(testImg);
+			// graphics.drawTriangles(plane.vertices, plane.indices, plane.uvtData);
+			// graphics.endFill();
+			//			//
+			//
+			var perlinNoise : BitmapData = new BitmapData(1, 1, true, 0);
+			var b : Bitmap = new Bitmap(perlinNoise);
+			b.width = stage.stageWidth;
+			b.height = stage.stageHeight;
+			addChild(b);
+
+			var offsets : Array = [];
+			var v : Array = [];
+			var k : int = 3;
+			for (var i : int = 0; i < k; i++) {
+				offsets.push(new Point());
+				v.push(Math.random() * 2 - 1);
+			}
+			var a : Number = 0;
+			var h : Number = 0;
+			addEventListener(Event.ENTER_FRAME, function() : void {
+				perlinNoise.perlinNoise(100, 100, k, 1977, false, false, 7, false, offsets);
+				for (var i : int = 0; i < k; i++) {
+					offsets[i]["x"] += v[i];
+				}
+
+				a = perlinNoise.getVector(perlinNoise.rect)[0];
+				trace(a - h);
+				h = a;
+				
+			});
 		}
 	}
 }
