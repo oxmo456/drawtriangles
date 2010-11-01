@@ -2,7 +2,6 @@ package {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.Sprite;
-	import flash.geom.Point;
 
 	public class TestColorCircle2 extends Sprite {
 		public function TestColorCircle2() {
@@ -13,25 +12,21 @@ package {
 			addChild(bitmap);
 
 			var dx : int = 300;
-			var dy : int = 300;
+			var dy : int = 300;			
 
-			bitmapData.lock();
-			var p : Point = new Point();
-
-			var ax : Number = Math.sin(0);
-			var ay : Number = Math.cos(0);
 			var c : Number = Math.sin(120 * Math.PI / 180);
 			var d : Number = Math.cos(120 * Math.PI / 180);
 			var e : Number = Math.sin(240 * Math.PI / 180);
 			var f : Number = Math.cos(240 * Math.PI / 180);
 
-			var k : int = 256;
-			var q : int = 1;
+			var k : int = 254;
+			var q : int = 2;
+			bitmapData.lock();
 			for (var r : int = 0; r < k; r += q) {
 				for (var g : int = 0; g < k; g += q) {
 					for (var b : int = 0; b < k; b += q) {
-						var x1 : Number = ax * r;
-						var y1 : Number = ay * r;
+						var x1 : Number = 0;
+						var y1 : Number = r;
 						var x2 : Number = c * g;
 						var y2 : Number = d * g;
 						var x3 : Number = e * b;
@@ -48,7 +43,6 @@ package {
 					}
 				}
 			}
-
 			bitmapData.unlock();
 		}
 	}
