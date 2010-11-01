@@ -20,13 +20,12 @@ package {
 
 			var rows : int = 30;
 			var cols : int = 30;
-			
-			var j:Number=100;
+
+			var j : Number = 100;
 
 			var perlinNoise : BitmapData = new BitmapData(rows + 1, cols + 1);
 			var offsetP1 : Point = new Point();
 			var offsets : Array = [offsetP1];
-			
 
 			var testImg : BitmapData = (new TestImg as Bitmap).bitmapData;
 			var verticeGrid : VerticeGrid;
@@ -39,9 +38,7 @@ package {
 			var sin240 : Number = Math.sin(240 * Math.PI / 180);
 			var cos240 : Number = Math.cos(240 * Math.PI / 180);
 
-			
-
-			addEventListener(Event.ENTER_FRAME, function() : void {				
+			addEventListener(Event.ENTER_FRAME, function() : void {
 				offsetP1.y += 1;
 				perlinNoise.lock();
 				perlinNoise.perlinNoise(15, 15, 1, 1977, true, true, 7, false, offsets);
@@ -79,13 +76,13 @@ package {
 				graphics.clear();
 				graphics.beginBitmapFill(testImg);
 				graphics.drawTriangles(vertices, verticeGrid.indices, verticeGrid.uvtData);
-				graphics.endFill();				
+				graphics.endFill();
 			});
 
 			stage.addEventListener(Event.RESIZE, stageResize);
 
 			function stageResize() : void {
-				verticeGrid = new VerticeGrid(stage.stageWidth + j*2, stage.stageHeight + j*2, rows, cols);
+				verticeGrid = new VerticeGrid(stage.stageWidth + j * 2, stage.stageHeight + j * 2, rows, cols);
 			}
 			stageResize();
 		}
@@ -114,20 +111,17 @@ class VerticeGrid {
 		}
 		indices = new Vector.<int>();
 		var k : int = 0;
-		var a : Vector.<uint> = new Vector.<uint>();
+		
 		for (var i : int = 0; i < rows; i++) {
 			for (var j : int = 0; j < columns; j++) {
-				a.push(k++);
+				var z0 : Number = k++;
+				var z1 : Number = z0 + 1;
+				var z2 : Number = z1 + columns;
+				var z3 : Number = z2 + 1;
+				indices.push(z0, z1, z2, z2, z3, z1);
 			}
 			k++;
 		}
-		k = a.length;
-		for (var w : int = 0; w < k; w++) {
-			var z0 : Number = a[w];
-			var z1 : Number = z0 + 1;
-			var z2 : Number = z1 + columns;
-			var z3 : Number = z2 + 1;
-			indices.push(z0, z1, z2, z2, z3, z1);
-		}
+		
 	}
 }
